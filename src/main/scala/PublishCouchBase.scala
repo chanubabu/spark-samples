@@ -8,14 +8,16 @@ object PublishCouchBase extends App{
     .builder()
     .appName("N1QLExample")
     .master("local[*]") // use the JVM as the master, great for testing
-    .config("spark.couchbase.nodes", "localhost") // connect to couchbase on localhost
+    .config("spark.couchbase.nodes", "127.0.0.1") // connect to couchbase on localhost
     .config("spark.couchbase.bucket.sample-bucket","") // open the travel-sample bucket with empty password
+    .config("com.couchbase.username", "Administrator")
+    .config("com.couchbase.password", "Welcome123")
     .getOrCreate()
 
   // Very simple schema, feel free to add more properties here. Properties that do not
   // exist in a streamed document show as null.
   val schema = StructType(
-    StructField("META_ID", StringType) ::
+      StructField("META_ID", StringType) ::
       StructField("type", StringType) ::
       StructField("name", StringType) :: Nil
   )

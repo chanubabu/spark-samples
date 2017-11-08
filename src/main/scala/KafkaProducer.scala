@@ -47,6 +47,7 @@ object KafkaProducer extends App{
     .option("kafka.bootstrap.servers", "localhost:9092")
     .option("subscribe", "test")
     .load()
+
   df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
     .as[(String, String)]
 

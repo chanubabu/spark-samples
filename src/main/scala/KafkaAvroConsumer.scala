@@ -1,8 +1,10 @@
 import java.io.EOFException
-import com.twitter.bijection.avro.GenericAvroCodecs
-import AvroParser.KafkaMessage
-import org.apache.spark.sql.functions.from_json
 
+//import com.twitter.bijection.avro.GenericAvroCodecs
+import AvroParser.KafkaMessage
+import com.couchbase.client.java.document.JsonDocument
+import com.couchbase.client.java.document.json.JsonObject
+import org.apache.spark.sql.functions.from_json
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.io.{DatumReader, Decoder, DecoderFactory}
@@ -59,7 +61,7 @@ object KafkaAvroConsumer extends App {
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", "localhost:9092")
-    .option("subscribe", "test3")
+    .option("subscribe", "resCollationEventTopic")
     .option("startingOffsets", "earliest")
     .load()
     .as[KafkaMessage]
@@ -78,13 +80,53 @@ object KafkaAvroConsumer extends App {
       val toi = userData1.get("TimeOfEvent").asInstanceOf[org.apache.avro.util.Utf8].toString
       val body = userData1.get("Body").asInstanceOf[org.apache.avro.util.Utf8].toString
 
-      et + ":" + es + ":" + ":" + koi + ":" + body
 
+      //et + ":" + es + ":" + ":" + koi + ":" + body
+
+      val doc:JsonDocument = JsonDocument.create("2222",
+        JsonObject.create()
+          .put("propertyCode", et)
+          .put("arrivalDate", es)
+          .put("reservationCode", koi)
+          .put("lastUpdateTime",body)
+      )
+      doc
     }
   }
   )
 
   ds1.printSchema()
+
+  /*val sparkCB = SparkSession
+    .builder()
+    .appName("N1QLExample")
+    .master("local[*]") // use the JVM as the master, great for testing
+    .config("spark.couchbase.nodes", "127.0.0.1") // connect to couchbase on localhost
+    .config("spark.couchbase.bucket.sample-bucket","") // open the travel-sample bucket with empty password
+    .config("com.couchbase.username", "Administrator")
+    .config("com.couchbase.password", "Welcome123")
+    .getOrCreate()
+
+  val sc = sparkCB.sparkContext
+
+  sc.parallelize(Seq(ds1)).saveToCouchbase()*/
+
+  //val JsonDoc = ds1.
+
+/*  val dsJSDoc = ds1.map(
+    row => {
+      val doc = JsonDocument
+        .create("mydoc",
+          JsonObject.create()
+            .put("type", "")
+            .put("reservationStatus", ""))
+      doc
+    }
+  )
+  val sc = spark.sparkContext
+
+  sc.parallelize(dsJSDoc).saveToCouchbase()*/
+
 
   val query = ds1.writeStream
     .outputMode("append")

@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="scala-tool"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20171102164809"/>
+		date="20171123145245"/>
 	<dependencies>
 		<module organisation="org.scala-lang" name="scala-compiler">
 			<revision name="2.11.0" status="release" pubdate="20140416144405" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, optional, optional(default), master" position="0">

@@ -30,7 +30,7 @@ class KafkaSink(topic: String, servers: String) extends ForeachWriter[(String,St
   }
 }
 
-object KafkaProducer extends App{
+object KafkaProducerTest extends App{
 
   val spark = SparkSession
     .builder()
@@ -68,5 +68,4 @@ object KafkaProducer extends App{
   query.awaitTermination()
 
   spark.stop()
-
 }

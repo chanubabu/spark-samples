@@ -4,7 +4,7 @@ import javassist.bytecode.stackmap.TypeTag
 //import org.apache.kafka.common.utils.Utils
 
 //import com.sun.javafx.util.Utils
-import com.typesafe.config.{Config, ConfigFactory}
+//import com.typesafe.config.{Config, ConfigFactory}
 //import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import org.apache.avro.generic.GenericData
 import org.apache.avro.io.{DatumReader, Decoder}
@@ -15,8 +15,8 @@ import org.apache.spark.sql.execution.streaming.FileStreamSource.Timestamp
 import scala.collection.immutable.Range.Int
 
 //import com.databricks.spark.avro.SchemaConverters
-import com.twitter.bijection.Injection
-import com.twitter.bijection.avro.GenericAvroCodecs
+//import com.twitter.bijection.Injection
+//import com.twitter.bijection.avro.GenericAvroCodecs
 import org.apache.avro.Schema
 import org.apache.avro.generic.GenericRecord
 

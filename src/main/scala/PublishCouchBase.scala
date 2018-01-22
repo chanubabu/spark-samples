@@ -22,6 +22,10 @@ object PublishCouchBase extends App{
       StructField("name", StringType) :: Nil
   )
 
+  val lines = spark.read.json("/work/NiFi/sample.json")
+
+ //val jsonLines = {"type":"RESERVATIONS","lastUpdateTime":"12/20/2016 6:44:34 AM","reservationStatus":"Committed","operationProfile":{"primaryLanguage":"en","secondaryLanguage":"en"},"reservation":{"creationDateTime":"12/20/2016 6:44:00 AM","creatorId":"WWWMW","purgeDate":"2017-02-05","reservationConfirmations":{"reservationTypeCode":"14","idContext":"Mariott","reservationCode":"9292327211","arrivalDate":"03022017","reservationInstace":"0"}},"property":{"brandCode":"FI","brandName":"fairFieldIn","propertyCode":"SLCFD","propertyCodeContext":"Mariott","propertyName":"FLS SALT LAKE DTWN","propertyMessages":{"otaInfoType":"18.INF","subSection":{"messageType":"propertyAlert","paragraph":{"messageLanguage":"en-US","messageText":"All rates at this hotel include complimentary in-room high speed Internet access"}}}}}
+
   // Define the Structured Stream from Couchbase with the given Schema
   val records = spark.readStream
     .format("com.couchbase.spark.sql")
@@ -37,6 +41,8 @@ object PublishCouchBase extends App{
     .format("console")
     .start()
     .awaitTermination()
+
+
 
   spark.stop()
 }

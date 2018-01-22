@@ -3,3 +3,4 @@ sbt package
 sbt 
 :q
 exit
+sbt assembly
